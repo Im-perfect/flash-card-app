@@ -1,6 +1,6 @@
 body {
     box-sizing: border-box;
-    background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+    background: linear-gradient(120deg, #e3ffe7 0%, #d9e7ff 100%);
     padding: 20px;
     margin: 0;
     color: #333333;
@@ -36,4 +36,31 @@ main {
     margin: 0 10px;
     cursor: pointer;
     border-radius: 20px;
+    background: white;
+}
+
+.button.round {
+    width: 40px;
+    border-radius: 50%;
+}
+
+#addSection{
+    margin-top: 30px;
+}
+#addForm {
+    display: flex;
+    align-items: center;
+}
+textarea {
+    color: #333;
+    background: none;
+    padding: 5px 5px;
+    border: solid 1px#3498db;
+    height: 50px;
+    resize: none;
+    flex: 40%;
+    margin-right: 10px;
+}
+#addButton {
+    margin-right: 0;
 }
