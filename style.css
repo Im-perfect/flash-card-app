@@ -37,3 +37,8 @@ main {
     cursor: pointer;
     border-radius: 20px;
 }
+
+.button.round {
+    width: 40px;
+    border-radius: 50%;
+}

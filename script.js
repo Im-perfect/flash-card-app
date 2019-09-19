@@ -54,6 +54,7 @@ currentCardElement.addEventListener('click', () => {
 const previousButton = document.getElementById('previous');
 const nextButton = document.getElementById('next');
 
+//click for next random card
 nextButton.addEventListener('click', () => {
     previousIndexOfCards = currentIndexOfCards;
     getCurrentCard();
@@ -64,6 +65,7 @@ nextButton.addEventListener('click', () => {
     }
 })
 
+//click for the previous card, but only once...because the previous cards are all random, need to make an array to store all the previous card indexes.
 previousButton.addEventListener('click', () => {
     if (previousIndexOfCards === null) {
         currentCardContentElement.innerHTML = '<em>There is no previous card.</em>';
@@ -73,5 +75,3 @@ previousButton.addEventListener('click', () => {
         currentCardContentElement.innerHTML = flashCardContent[currentIndexOfCards].question;
     }
 })
-
-
