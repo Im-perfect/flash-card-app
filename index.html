@@ -19,7 +19,13 @@
         <section id="buttons">
             <button class="button" id="previous">Previous</button>
             <button class="button" id="next">Next</button>
-            <button class="button round" id='add'>+</button>
+        </section>
+        <section id='addSection'>
+            <form onsubmit="submitComment(); return false" id="addForm">
+                <textarea id="newQuestion" placeholder="Type the QUESTION here..." tabindex="5"></textarea>
+                <textarea id="newAnswer" placeholder="Type the ANSWER here..." tabindex="5"></textarea>
+            </form>         
+            <button class="button round" id='addButton'>+</button>
         </section>
     </main>
     <script src="script.js"></script>
