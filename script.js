@@ -125,3 +125,4 @@ const submitNewCard = () => {
         newAnswer.value = null;
     }
 }
+
