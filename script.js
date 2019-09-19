@@ -1,23 +1,23 @@
 const flashCardContent = [
     {
-        question:'Où passes-tu tes vacances?',
-        answer:'Where do you spend your holidays?'
+        question:'1. Où passes-tu tes vacances?',
+        answer:'1. Where do you spend your holidays?'
     },
     {
-        question:'Je passe mes vacances ...',
-        answer:'I spend my holidays ...'
+        question:'2. Je passe mes vacances ...',
+        answer:'2. I spend my holidays ...'
     },
     {
-        question:'Combien de temps restes-tu en vacances?',
-        answer:'How long do you go for?'
+        question:'3. Combien de temps restes-tu en vacances?',
+        answer:'3. How long do you go for?'
     }
     ,    {
-        question:'Avec qui vas-tu en vacances?',
-        answer:'Who do you go on holiday with?'
+        question:'4. Avec qui vas-tu en vacances?',
+        answer:'4. Who do you go on holiday with?'
     },
     {
-        question:'Je vais en vacances avec ...',
-        answer:'I go on holiday with ...'
+        question:'5. Je vais en vacances avec ...',
+        answer:'5. I go on holiday with ...'
     }
 ];
 document.getElementById('numberOfCards').innerHTML = flashCardContent.length;
@@ -33,11 +33,14 @@ let isQuestion = true;
 //generate a random card
 const getCurrentCard = () => {
     currentIndexOfCards = Math.round(Math.random() * (flashCardContent.length - 1));
-    currentCardContentElement.innerHTML = currentCard.question;
+    currentCard = flashCardContent[currentIndexOfCards];
+    currentCardContentElement.innerHTML = flashCardContent[currentIndexOfCards].question;
 }
 
+//initialize
 getCurrentCard();
 
+//toggle card
 currentCardElement.addEventListener('click', () => {
     if( isQuestion ) {
         currentCardContentElement.innerHTML = flashCardContent[currentIndexOfCards].answer;
@@ -48,6 +51,27 @@ currentCardElement.addEventListener('click', () => {
     }
 });
 
+const previousButton = document.getElementById('previous');
+const nextButton = document.getElementById('next');
 
+nextButton.addEventListener('click', () => {
+    previousIndexOfCards = currentIndexOfCards;
+    getCurrentCard();
+    if(currentIndexOfCards === previousIndexOfCards) {
+        getCurrentCard();
+    } else {
+        currentCardContentElement.innerHTML = flashCardContent[currentIndexOfCards].question;
+    }
+})
+
+previousButton.addEventListener('click', () => {
+    if (previousIndexOfCards === null) {
+        currentCardContentElement.innerHTML = '<em>There is no previous card.</em>';
+    } else {
+        currentCard = flashCardContent[previousIndexOfCards];
+        currentIndexOfCards = previousIndexOfCards;
+        currentCardContentElement.innerHTML = flashCardContent[currentIndexOfCards].question;
+    }
+})
 
 
