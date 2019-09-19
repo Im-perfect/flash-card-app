@@ -1,0 +1,39 @@
+body {
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+    padding: 20px;
+    margin: 0;
+    color: #333333;
+}
+
+main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+#flashcard {
+    background: white;
+    width: 400px;
+    height: 200px; 
+    padding: 40px;
+    margin: 0 auto;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    cursor: pointer;
+}
+#buttons {
+    display: flex;
+    justify-content: center;
+    margin-top:20px;
+}
+.button {
+    border: none;
+    height: 40px;
+    width: 100px;
+    text-align: center;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 20px;
+}
