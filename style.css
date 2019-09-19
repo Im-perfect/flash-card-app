@@ -45,13 +45,11 @@ main {
 }
 
 #addSection{
-    display: flex;
-    align-items: center;
     margin-top: 30px;
 }
 #addForm {
-    flex: 80%;
     display: flex;
+    align-items: center;
 }
 textarea {
     color: #333;
@@ -60,7 +58,7 @@ textarea {
     border: solid 1px#3498db;
     height: 50px;
     resize: none;
-    flex: 50%;
+    flex: 40%;
     margin-right: 10px;
 }
 #addButton {

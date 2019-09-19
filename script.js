@@ -75,3 +75,25 @@ previousButton.addEventListener('click', () => {
         currentCardContentElement.innerHTML = flashCardContent[currentIndexOfCards].question;
     }
 })
+
+const submitNewCard = () => {
+    const newQuestion = document.getElementById('newQuestion');
+    const newAnswer = document.getElementById('newAnswer');
+
+    if (!newQuestion.value.trim() || !newAnswer.value.trim()) {
+        alert('Please fill in again.');
+    } else {
+        //add new content to flashcard pool
+        flashCardContent.push( {question:newQuestion.value, answer:newAnswer.value} );
+
+        previousIndexOfCards = currentIndexOfCards;
+        currentIndexOfCards = flashCardContent.length-1;
+        currentCard = flashCardContent[currentIndexOfCards];
+        currentCardContentElement.innerHTML = currentCard.question;
+
+        document.getElementById('numberOfCards').innerHTML = flashCardContent.length;
+
+        newQuestion.value = null;
+        newAnswer.value = null;
+    }
+}
