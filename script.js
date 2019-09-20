@@ -1,16 +1,20 @@
 let flashCardPool = null;
-let url = 'https://api.jsonbin.io/b/5d84d6b690b0b649d69a31b1/1';
+
+//fetch data from jsonbin
+let url = "https://api.jsonbin.io/b/5d84d6b690b0b649d69a31b1/1";
 
 fetch(url)
-.then(res => res.json())
-.then((out) => {
-  console.log(out);
-  flashCardPool = out.data;
-  console.log(flashCardPool);
+  .then(res => res.json())
+  .then(out => {
+    console.log(out);
+    flashCardPool = out.data;
+    console.log(flashCardPool);
 
-  startApp();
-})
-.catch(err => { throw err });
+    startApp();
+  })
+  .catch(err => {
+    throw err;
+  });
 
 // const flashCardPool = [
 //   {
@@ -56,158 +60,160 @@ fetch(url)
 // ];
 
 const startApp = () => {
+  //initialize current flash card category
+  let flashCardContent = flashCardPool.filter(e => e.category === "French");
+  let currentIndexOfCards = 0; //Math.round(Math.random() * (flashCardContent.length - 1));
+  const previousHistory = [];
+  let previousIndexOfCards = null;
+  let currentCard = flashCardContent[currentIndexOfCards];
+  let currentCardContentElement = document.getElementById("flashCardContent");
+  const currentCardElement = document.getElementById("flashCard");
+  let language = "French";
 
-//initialize current flash card category
-let flashCardContent = flashCardPool.filter(e => e.category === "French");
-let currentIndexOfCards = 0; //Math.round(Math.random() * (flashCardContent.length - 1));
-const previousHistory = [];
-let previousIndexOfCards = null;
-let currentCard = flashCardContent[currentIndexOfCards];
-let currentCardContentElement = document.getElementById("flashCardContent");
-const currentCardElement = document.getElementById("flashCard");
-let language = "French";
+  //function to control which card to show, flip cards, previous, next cards
+  const showCards = flashCardContent => {
+    console.log("showCards", flashCardContent);
+    console.log(previousHistory, previousHistory.length);
 
-//function to control which card to show, flip cards, previous, next cards
-const showCards = flashCardContent => {
-  console.log("showCards", flashCardContent);
-  console.log(previousHistory, previousHistory.length);
+    let isQuestion = true;
 
-  let isQuestion = true;
+    //generate a random card
+    const getRandomCard = () => {
+      currentIndexOfCards = Math.round(
+        Math.random() * (flashCardContent.length - 1)
+      );
+      currentCard = flashCardContent[currentIndexOfCards];
+      currentCardContentElement.innerHTML =
+        flashCardContent[currentIndexOfCards].question;
+    };
 
-  //generate a random card
-  const getRandomCard = () => {
-    currentIndexOfCards = Math.round(
-      Math.random() * (flashCardContent.length - 1)
-    );
-    currentCard = flashCardContent[currentIndexOfCards];
-    currentCardContentElement.innerHTML =
-      flashCardContent[currentIndexOfCards].question;
+    //initialize
+    getRandomCard();
+
+    //toggle card
+    currentCardElement.addEventListener("click", () => {
+      if (isQuestion) {
+        currentCardContentElement.innerHTML =
+          flashCardContent[currentIndexOfCards].answer;
+        isQuestion = false;
+      } else {
+        currentCardContentElement.innerHTML =
+          flashCardContent[currentIndexOfCards].question;
+        isQuestion = true;
+      }
+    });
+
+    const previousButton = document.getElementById("previous");
+    const nextButton = document.getElementById("next");
+
+    //click for next random card
+    nextButton.addEventListener("click", () => {
+      previousIndexOfCards = currentIndexOfCards;
+      getRandomCard();
+      //if same card, do it again
+      if (currentIndexOfCards === previousIndexOfCards) {
+        getRandomCard();
+      } else {
+        previousHistory.push(currentIndexOfCards);
+        console.log(previousHistory);
+        currentCardContentElement.innerHTML =
+          flashCardContent[currentIndexOfCards].question;
+      }
+    });
+
+    previousButton.addEventListener("click", () => {
+      //click for the previous card, but only once...because the previous cards are all random, need to make an array to store all the previous card indexes.
+      // if (previousIndexOfCards === null) {
+      //   currentCardContentElement.innerHTML =
+      //     "<em>There is no previous card.</em>";
+      // } else {
+      //   currentCard = flashCardContent[previousIndexOfCards];
+      //   currentIndexOfCards = previousIndexOfCards;
+      //   currentCardContentElement.innerHTML =
+      //     flashCardContent[currentIndexOfCards].question;
+      // }
+
+      //log multiple previous history
+      if (previousHistory.length === 1 || previousHistory.length === 0) {
+        currentCardContentElement.innerHTML =
+          "<em>There is no previous card.</em>";
+        previousHistory.pop();
+      } else {
+        previousHistory.pop();
+        previousIndexOfCards = previousHistory.length - 1;
+
+        console.log(previousHistory, previousHistory.length);
+
+        currentCard = flashCardContent[previousIndexOfCards];
+        currentIndexOfCards = previousIndexOfCards;
+        currentCardContentElement.innerHTML =
+          flashCardContent[currentIndexOfCards].question;
+      }
+    });
   };
 
-  //initialize
-  getRandomCard();
-
-  //toggle card
-  currentCardElement.addEventListener("click", () => {
-    if (isQuestion) {
-      currentCardContentElement.innerHTML =
-        flashCardContent[currentIndexOfCards].answer;
-      isQuestion = false;
-    } else {
-      currentCardContentElement.innerHTML =
-        flashCardContent[currentIndexOfCards].question;
-      isQuestion = true;
-    }
-  });
-
-  const previousButton = document.getElementById("previous");
-  const nextButton = document.getElementById("next");
-
-  //click for next random card
-  nextButton.addEventListener("click", () => {
-    previousIndexOfCards = currentIndexOfCards;
-    getRandomCard();
-    //if same card, do it again
-    if (currentIndexOfCards === previousIndexOfCards) {
-      getRandomCard();
-    } else {
-      previousHistory.push(currentIndexOfCards);
-      console.log(previousHistory);
-      currentCardContentElement.innerHTML =
-        flashCardContent[currentIndexOfCards].question;
-    }
-  });
-
-  //click for the previous card, but only once...because the previous cards are all random, need to make an array to store all the previous card indexes.
-  previousButton.addEventListener("click", () => {
-    // if (previousIndexOfCards === null) {
-    //   currentCardContentElement.innerHTML =
-    //     "<em>There is no previous card.</em>";
-    // } else {
-    //   currentCard = flashCardContent[previousIndexOfCards];
-    //   currentIndexOfCards = previousIndexOfCards;
-    //   currentCardContentElement.innerHTML =
-    //     flashCardContent[currentIndexOfCards].question;
-    // }
-    if (previousHistory.length === 1 || previousHistory.length === 0) {
-      currentCardContentElement.innerHTML =
-        "<em>There is no previous card.</em>";
-      previousHistory.pop();
-    } else {
-      previousHistory.pop();
-      previousIndexOfCards = previousHistory.length - 1;
-
-      console.log(previousHistory, previousHistory.length);
-
-      currentCard = flashCardContent[previousIndexOfCards];
-      currentIndexOfCards = previousIndexOfCards;
-      currentCardContentElement.innerHTML =
-        flashCardContent[currentIndexOfCards].question;
-    }
-  });
-};
-
-//add a new card to the current category
-const submitNewCard = (event) => {
+  //add a new card to the current category
+  const submitNewCard = event => {
     event.preventDefault();
-  console.log("new card called");
-  const newQuestion = document.getElementById("newQuestion");
-  const newAnswer = document.getElementById("newAnswer");
+    console.log("new card called");
+    const newQuestion = document.getElementById("newQuestion");
+    const newAnswer = document.getElementById("newAnswer");
 
-  if (!newQuestion.value.trim() || !newAnswer.value.trim()) {
-    alert("Please fill in again.");
-  } else {
-    pushCard(language);
+    if (!newQuestion.value.trim() || !newAnswer.value.trim()) {
+      alert("Please fill in again.");
+    } else {
+      pushCard(language);
 
-    previousIndexOfCards = currentIndexOfCards;
-    currentIndexOfCards = flashCardContent.length - 1;
-    currentCard = flashCardContent[currentIndexOfCards];
-    currentCardContentElement.innerHTML = currentCard.question;
+      previousIndexOfCards = currentIndexOfCards;
+      currentIndexOfCards = flashCardContent.length - 1;
+      currentCard = flashCardContent[currentIndexOfCards];
+      currentCardContentElement.innerHTML = currentCard.question;
 
+      totalOfCards();
+
+      newQuestion.value = null;
+      newAnswer.value = null;
+    }
+  };
+  document.getElementById("addButton").addEventListener("click", submitNewCard);
+
+  //show the total number of cards in the current category
+  const totalOfCards = () => {
+    document.getElementById("numberOfCards").innerHTML =
+      flashCardContent.length;
+  };
+
+  //add the new card to the card pool
+  const pushCard = language => {
+    flashCardPool.push({
+      question: newQuestion.value,
+      answer: newAnswer.value,
+      category: language
+    });
+
+    flashCardContent.push({
+      question: newQuestion.value,
+      answer: newAnswer.value,
+      category: language
+    });
+  };
+
+  showCards(flashCardContent);
+  totalOfCards();
+
+  document.getElementById("French").addEventListener("click", () => {
+    language = "French";
+    flashCardContent = flashCardPool.filter(e => e.category === language);
+    console.log("current cards", flashCardContent);
     totalOfCards();
-
-    newQuestion.value = null;
-    newAnswer.value = null;
-  }
-};
-document.getElementById('addButton').addEventListener('click', submitNewCard);
-
-//show the total number of cards in the current category
-const totalOfCards = () => {
-  document.getElementById("numberOfCards").innerHTML = flashCardContent.length;
-};
-
-//add the new card to the card pool
-const pushCard = language => {
-  flashCardPool.push({
-    question: newQuestion.value,
-    answer: newAnswer.value,
-    category: language
+    showCards(flashCardContent);
   });
 
-  flashCardContent.push({
-    question: newQuestion.value,
-    answer: newAnswer.value,
-    category: language
+  document.getElementById("Chinese").addEventListener("click", () => {
+    language = "Chinese";
+    flashCardContent = flashCardPool.filter(e => e.category === language);
+    console.log("current cards", flashCardContent);
+    totalOfCards();
+    showCards(flashCardContent);
   });
-};
-
-showCards(flashCardContent);
-totalOfCards();
-
-document.getElementById("French").addEventListener("click", () => {
-  language = "French";
-  flashCardContent = flashCardPool.filter(e => e.category === language);
-  console.log("current cards", flashCardContent);
-  totalOfCards();
-  showCards(flashCardContent);
-});
-
-document.getElementById("Chinese").addEventListener("click", () => {
-  language = "Chinese";
-  flashCardContent = flashCardPool.filter(e => e.category === language);
-  console.log("current cards", flashCardContent);
-  totalOfCards();
-  showCards(flashCardContent);
-});
 };
