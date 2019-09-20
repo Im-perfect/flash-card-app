@@ -1,45 +1,61 @@
-const flashCardPool = [
-  {
-    question: "1. Où passes-tu tes vacances?",
-    answer: "1. Where do you spend your holidays?",
-    category: "French"
-  },
-  {
-    question: "2. Je passe mes vacances ...",
-    answer: "2. I spend my holidays ...",
-    category: "French"
-  },
-  {
-    question: "3. Combien de temps restes-tu en vacances?",
-    answer: "3. How long do you go for?",
-    category: "French"
-  },
-  {
-    question: "4. Avec qui vas-tu en vacances?",
-    answer: "4. Who do you go on holiday with?",
-    category: "French"
-  },
-  {
-    question: "5. Je vais en vacances avec ...",
-    answer: "5. I go on holiday with ...",
-    category: "French"
-  },
-  {
-    question: "1. 你在哪里度假?",
-    answer: "1. Where do you spend your holidays?",
-    category: "Chinese"
-  },
-  {
-    question: "2. 我在...度假",
-    answer: "2. I spend my holidays ...",
-    category: "Chinese"
-  },
-  {
-    question: "3. 你去了多久?",
-    answer: "3. How long do you go for?",
-    category: "Chinese"
-  }
-];
+let flashCardPool = null;
+let url = 'https://api.jsonbin.io/b/5d84d6b690b0b649d69a31b1/1';
+
+fetch(url)
+.then(res => res.json())
+.then((out) => {
+  console.log(out);
+  flashCardPool = out.data;
+  console.log(flashCardPool);
+
+  startApp();
+})
+.catch(err => { throw err });
+
+// const flashCardPool = [
+//   {
+//     question: "1. Où passes-tu tes vacances?",
+//     answer: "1. Where do you spend your holidays?",
+//     category: "French"
+//   },
+//   {
+//     question: "2. Je passe mes vacances ...",
+//     answer: "2. I spend my holidays ...",
+//     category: "French"
+//   },
+//   {
+//     question: "3. Combien de temps restes-tu en vacances?",
+//     answer: "3. How long do you go for?",
+//     category: "French"
+//   },
+//   {
+//     question: "4. Avec qui vas-tu en vacances?",
+//     answer: "4. Who do you go on holiday with?",
+//     category: "French"
+//   },
+//   {
+//     question: "5. Je vais en vacances avec ...",
+//     answer: "5. I go on holiday with ...",
+//     category: "French"
+//   },
+//   {
+//     question: "1. 你在哪里度假?",
+//     answer: "1. Where do you spend your holidays?",
+//     category: "Chinese"
+//   },
+//   {
+//     question: "2. 我在...度假",
+//     answer: "2. I spend my holidays ...",
+//     category: "Chinese"
+//   },
+//   {
+//     question: "3. 你去了多久?",
+//     answer: "3. How long do you go for?",
+//     category: "Chinese"
+//   }
+// ];
+
+const startApp = () => {
 
 //initialize current flash card category
 let flashCardContent = flashCardPool.filter(e => e.category === "French");
@@ -132,7 +148,8 @@ const showCards = flashCardContent => {
 };
 
 //add a new card to the current category
-const submitNewCard = () => {
+const submitNewCard = (event) => {
+    event.preventDefault();
   console.log("new card called");
   const newQuestion = document.getElementById("newQuestion");
   const newAnswer = document.getElementById("newAnswer");
@@ -153,6 +170,7 @@ const submitNewCard = () => {
     newAnswer.value = null;
   }
 };
+document.getElementById('addButton').addEventListener('click', submitNewCard);
 
 //show the total number of cards in the current category
 const totalOfCards = () => {
@@ -192,3 +210,4 @@ document.getElementById("Chinese").addEventListener("click", () => {
   totalOfCards();
   showCards(flashCardContent);
 });
+};

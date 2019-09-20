@@ -1,0 +1,43 @@
+{ "flashCardPool" : [
+    {
+      "question": "1. Où passes-tu tes vacances?",
+      "answer": "1. Where do you spend your holidays?",
+      "category": "French"
+    },
+    {
+      "question": "2. Je passe mes vacances ...",
+      "answer": "2. I spend my holidays ...",
+      "category": "French"
+    },
+    {
+      "question": "3. Combien de temps restes-tu en vacances?",
+      "answer": "3. How long do you go for?",
+      "category": "French"
+    },
+    {
+      "question": "4. Avec qui vas-tu en vacances?",
+      "answer": "4. Who do you go on holiday with?",
+      "category": "French"
+    },
+    {
+      "question": "5. Je vais en vacances avec ...",
+      "answer": "5. I go on holiday with ...",
+      "category": "French"
+    },
+    {
+      "question": "1. 你在哪里度假?",
+      "answer": "1. Where do you spend your holidays?",
+      "category": "Chinese"
+    },
+    {
+      "question": "2. 我在...度假",
+      "answer": "2. I spend my holidays ...",
+      "category": "Chinese"
+    },
+    {
+      "question": "3. 你去了多久?",
+      "answer": "3. How long do you go for?",
+      "category": "Chinese"
+    }
+  ]
+}
