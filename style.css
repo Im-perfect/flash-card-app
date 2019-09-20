@@ -64,3 +64,10 @@ textarea {
 #addButton {
     margin-right: 0;
 }
+
+#meta-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
