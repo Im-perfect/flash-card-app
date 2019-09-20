@@ -44,12 +44,15 @@ const flashCardPool = [
 //initialize current flash card category
 let flashCardContent = flashCardPool.filter((e)=>e.category === 'French');
 let currentIndexOfCards = 0; //Math.round(Math.random() * (flashCardContent.length - 1));
+const previousHistory = null;
 let previousIndexOfCards = null;
 let currentCard = flashCardContent[currentIndexOfCards];
 let currentCardContentElement = document.getElementById("flashCardContent");
 const currentCardElement = document.getElementById("flashCard");
 let language = 'French';
 
+
+//function to control which card to show, flip cards, previous, next cards
 const showCards = flashCardContent => {
     console.log("showCards", flashCardContent);
 
@@ -110,6 +113,7 @@ const showCards = flashCardContent => {
   });
 };
 
+//add a new card to the current category
 const submitNewCard = () => {
     console.log('new card called');
   const newQuestion = document.getElementById("newQuestion");
@@ -119,7 +123,6 @@ const submitNewCard = () => {
     alert("Please fill in again.");
   } 
   else {
-    //add new content to flashcard pool
     pushCard(language);
 
     previousIndexOfCards = currentIndexOfCards;
@@ -134,10 +137,12 @@ const submitNewCard = () => {
   }
 };
 
+//show the total number of cards in the current category
 const totalOfCards = () => {
     document.getElementById("numberOfCards").innerHTML = flashCardContent.length;
 };
 
+//add the new card to the card pool
 const pushCard = (language) => {
     flashCardPool.push({
         question: newQuestion.value,
